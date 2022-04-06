@@ -1,0 +1,79 @@
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="card flex-md-row mb-4 box-shadow h-md-250">
+      <div class="card-body d-flex flex-column align-items-start">
+        <strong class="d-inline-block mb-2 text-primary"><%= @series.genre %></strong>
+        <h3 class="mb-0">
+          <a class="text-dark" href="javascript:void(0)"><%= @series.name %></a>
+        </h3>
+        <div class="mb-1 text-muted"><%= @series.release_date&.strftime("%d %b %Y") %></div>
+        <div class="mb-1">
+          <div class="card">
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">
+                <strong>Director:</strong>
+                <%= @series.directors.pluck(:name).join(', ') %></li>
+              <li class="list-group-item">
+                <strong>Shoot loactions:</strong>
+                <%= @series.shoot_locations.join(', ') %></li>
+              <li class="list-group-item">
+                <strong>Country:</strong>
+                <%= @series.country %></li>
+              <li class="list-group-item">
+                <strong>Actors:</strong>
+                <%= @series.actors.pluck(:name).join(', ') %></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row card-deck">
+  <div class="col-sm-5">
+    <div class="rating-block">
+      <h4>Average user rating</h4>
+      <% rating = @reviews.average(:stars).to_f %>
+        <h2 class="bold padding-bottom-7"><%= rating %>
+          <small>/ 5</small>
+        </h2>
+        <%= show_raiting(rating)%>
+      </div>
+    </div>
+    <div class="col-sm-7">
+      <h4>Rating breakdown</h4>
+      <%= show_rating_breakdown(@reviews.map{|d| d.stars }) %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-12">
+      <hr/>
+      <div class="review-block">
+        <% @reviews.each do |review| %>
+          <div class="row">
+            <div class="col-sm-4">
+              <img src="http://dummyimage.com/60x60/666/ffffff&text=No+Image" class="img-rounded">
+              <div class="review-block-name">
+                <a href="#">
+                  <% review.user_name %>
+                  </a>
+                </div>
+                <div class="review-block-date"><%= review.created_at&.strftime("%B %d, %Y") %><br/><%= time_difference(review.created_at, Time.now) %>
+                  ago</div>
+              </div>
+              <div class="col-sm-8">
+                <div class="review-block-rate">
+                  <%= show_raiting(review.stars)%>
+                </div>
+                <div class="review-block-title"><%= review.review %></div>
+              </div>
+            </div>
+            <hr/>
+          <% end %>
+        </div>
+      </div>
+    </div>

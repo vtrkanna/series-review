@@ -1,0 +1,13 @@
+<div class="pull-left">
+  <div class="pull-left" style="width:35px; line-height:1;">
+    <div style="height:9px; margin:5px 0;"><%= rate %>
+      <span class="fa fa-star"></span></div>
+  </div>
+  <div class="pull-left" style="width:180px;">
+    <div class="progress" style="height:9px; margin:8px 0;">
+      <div class="progress-bar progress-bar-success progressbar-<%= rate %>" role="progressbar" aria-valuenow="<%= rate %>" aria-valuemin="0" aria-valuemax="5" style="width: <%= (count.to_f / rate.to_f * 100).ceil %>%">
+        <span class="sr-only">80% Complete (danger)</span>
+      </div>
+    </div>
+  </div>
+</div>
